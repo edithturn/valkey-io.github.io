@@ -47,7 +47,7 @@ From **redis_exporter**, one series per pod:
 One flag is worth knowing about: `--append-instance-role-label` adds an `instance_role` label of master or replica, making it easy to separate primaries from replicas in a query or alert.
 
 
-From **BetterDB**, cluster-wide: 
+From **BetterDB**, `cluster-wide` and `per-slot`: 
 - `betterdb_commandlog_large_request`
 - `betterdb_commandlog_large_reply`
 - `betterdb_slowlog_pattern_count`
@@ -55,7 +55,7 @@ From **BetterDB**, cluster-wide:
 - `betterdb_cluster_slot_keys`
 - `betterdb_cluster_slot_reads_total`
 - `betterdb_cluster_slot_writes_total`, and
-- `per-slot` statistics from `CLUSTER SLOT-STATS` that redis_exporter has no equivalent for. Finding your hottest slot is one query: topk(10, rate(betterdb_cluster_slot_writes_total[5m]))
+- `per-slot` statistics from `CLUSTER SLOT-STATS` that redis_exporter has no equivalent for. Finding your hottest slot is one query: topk(10, rate(`betterdb_cluster_slot_writes_total`[5m]))
 
 The **commandlog** metrics require Valkey 8.1+ (they have no Redis equivalent), slot statistics require Valkey 8.0+ with `cluster-slot-stats-enabled`, and `betterdb_acl_denied` requires [`ACL LOG`](https://valkey.io/commands/acl-log/) (available since version 6).
 
